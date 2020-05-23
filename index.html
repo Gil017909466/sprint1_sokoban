@@ -1,17 +1,33 @@
 <!doctype html>
 <html>
+
 <head>
   <meta charset="utf-8">
   <title>Sokoban</title>
-  <link rel="stylesheet" href="css/app.css"/>
+  <link rel="stylesheet" href="app.css" />
 </head>
-<body onload="init()" onkeydown="movePlayer(event)">
- <header>
-     <h3>Score: <span>0</span> </h3> 
- </header> 
- <div class="board-container"></div>
 
- <script src="./game.js"></script>
+<body onload="init()" onkeydown="moveTo(event)">
+  <center>
+    <div class="container">
+      <div class="upperDashBoard">
+        <div class="score">Score: 0</div>
+        <div class="butt resetButt" onclick="init()">Reset SokoBan</div>
+      </div>
+      <div class="gameOver"></div>
+      <div class="board-container"></div>
+
+
+    </div>
+   
+    <div class="endModal">
+      <h3>Well Done!</h3>
+    </div>
+    <div class="explanationModal"><h3><span></span></h3></div>
+
+    <script src="./game.js"></script>
+    </div>
+  </center>
 </body>
-</html>
 
+</html>
