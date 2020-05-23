@@ -198,25 +198,29 @@ function moveTo(eventKeyboard) {
         if (nextCell.background === GOLD) {
             updateScore(-10);                  // it adds 10 points instead of adding 100
             gElExplanation.innerHTML = gExplanationGold;
-            setTimeout(function () { gElExplanation.innerHTML = ''+gMagnetReminder; }, gExplanationPeriod);
+            setTimeout(function () { gElExplanation.innerHTML = '' + gMagnetReminder; }, gExplanationPeriod);
             terminateBonus();
         } else if (nextCell.background === CLOCK) {
             gGame.countTenSteps++;
             gElExplanation.innerHTML = gExplanationClock;
-            setTimeout(function () { gElExplanation.innerHTML = ''+gMagnetReminder; }, gExplanationPeriod);
+            setTimeout(function () { gElExplanation.innerHTML = '' + gMagnetReminder; }, gExplanationPeriod);
             terminateBonus();
         } else if (nextCell.background === MAGNET) {
             gGame.magnetOn = 1;
             gElExplanation.innerHTML = gExplanationMagnet1;
             gMagnetReminder = '🧲 You still have a magnet :)';
-         //   setTimeout(function () { gElExplanation.innerHTML = ''; }, gExplanationPeriod);
+            //   setTimeout(function () { gElExplanation.innerHTML = ''; }, gExplanationPeriod);
             terminateBonus();
         } else if (nextCell.background === GLUE) {
             updateScore(5);
             gGame.isOn = false;
             gElExplanation.innerHTML = gExplanationGlue;
-            setTimeout(function () { gElExplanation.innerHTML = ''+gMagnetReminder; }, gExplanationPeriod);
-            setTimeout(function () { gGame.isOn = true; }, 5000);
+        //    setTimeout(function () { gElExplanation.innerHTML = '' + gMagnetReminder; }, gExplanationPeriod);
+            setTimeout(function () {
+                gGame.isOn = true;
+                gElExplanation.innerHTML = 'Yay!!! Now you can move ' + gMagnetReminder;
+                setTimeout(function () { gElExplanation.innerHTML = '' + gMagnetReminder; }, gExplanationPeriod);
+            }, 5000);
         }
         // Update the player   
         gGamerPos = nextLocation;
@@ -266,7 +270,7 @@ function tryMovingBox(i, j, direction) {
         gGame.pullDirection = { x: i + deltaI, y: j + deltaJ, deltaX: deltaI, deltaY: deltaJ };
         gElExplanation = document.querySelector('.explanationModal span');
         gElExplanation.innerHTML = gExplanationMagnet2;
-        setTimeout(function () { gElExplanation.innerHTML = ''+gMagnetReminder; }, gExplanationPeriod);
+        setTimeout(function () { gElExplanation.innerHTML = '' + gMagnetReminder; }, gExplanationPeriod);
         return false;
     }
 
@@ -274,24 +278,24 @@ function tryMovingBox(i, j, direction) {
         return false;
 
     var slide = 0;
-    if (gBoard[i + (deltaI * 2)][j + (deltaJ * 2)].background === WATER){
+    if (gBoard[i + (deltaI * 2)][j + (deltaJ * 2)].background === WATER) {
         slide = true;
         gElExplanation = document.querySelector('.explanationModal span');
         gElExplanation.innerHTML = gExplanationWater;
-        setTimeout(function () { gElExplanation.innerHTML = ''+gMagnetReminder; }, gExplanationPeriod);
+        setTimeout(function () { gElExplanation.innerHTML = '' + gMagnetReminder; }, gExplanationPeriod);
     }
     do {
-            gBoard[(i + row) + (deltaI * 2)][(j + col) + (deltaJ * 2)].content = BOX;
-            renderCell({ x: (i + row) + (deltaI * 2), y: (j + col) + (deltaJ * 2) }, BOX);
+        gBoard[(i + row) + (deltaI * 2)][(j + col) + (deltaJ * 2)].content = BOX;
+        renderCell({ x: (i + row) + (deltaI * 2), y: (j + col) + (deltaJ * 2) }, BOX);
 
-            gGamerPos.x += deltaI;
-            gGamerPos.y += deltaJ;
-            gBoard[gGamerPos.x][gGamerPos.y].content = PLAYER;
-            renderCell({ x: gGamerPos.x, y: gGamerPos.y }, PLAYER);
+        gGamerPos.x += deltaI;
+        gGamerPos.y += deltaJ;
+        gBoard[gGamerPos.x][gGamerPos.y].content = PLAYER;
+        renderCell({ x: gGamerPos.x, y: gGamerPos.y }, PLAYER);
 
-            gBoard[i + row][j + col].content = gBoard[i + row][j + col].background;
-            renderCell({ x: i + row, y: j + col }, gBoard[i + row][j + col].content);
-    
+        gBoard[i + row][j + col].content = gBoard[i + row][j + col].background;
+        renderCell({ x: i + row, y: j + col }, gBoard[i + row][j + col].content);
+
         updateScore(1);
         row += deltaI;
         col += deltaJ;
